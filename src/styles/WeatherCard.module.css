@@ -1,0 +1,28 @@
+.weather-card {
+  padding: 1rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  width: 220px;
+}
+
+.weather-card h2 {
+  margin: 0.2rem 0;
+}
+
+.weather-card .temp {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.weather-card .desc {
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
+}
+
+.weather-card .details {
+  display: flex;
+  justify-content: space-around;
+  font-size: 0.9rem;
+}

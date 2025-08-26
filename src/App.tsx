@@ -1,13 +1,14 @@
-import { useState } from 'react'
-import './App.css'
+import { Text } from "./components/Text";
+import { CurrentWeather } from "./containers/CurrentWeather";
+import "./App.css";
 
 function App() {
   return (
-    <div>
-      <h1>Weather App</h1>
-      <p>First Test</p>
+    <div className="app">
+      <Text variant="h1" className="title">🌤️ Weather App</Text>
+      <CurrentWeather />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
