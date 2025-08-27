@@ -1,25 +1,25 @@
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
-const BASE_URL = "https://api.openweathermap.org/data/2.5";
-console.log("API Key:", API_KEY);
-
+const BASE_URL = "https://api.weatherapi.com/v1";
 
 export async function fetchCurrentWeather(lat: number, lon: number) {
-  const res = await fetch(
-    `${BASE_URL}/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
-  );
-
-  if (!res.ok) throw new Error("Failed to fetch weather data");
+  const url = `${BASE_URL}/current.json?key=${API_KEY}&q=${lat},${lon}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Failed to fetch current weather");
   return res.json();
 }
 
-export async function fetchWeatherByCity(city: string) {
-  const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
-  if (!API_KEY) throw new Error("API key missing");
+export async function fetchForecast(lat: number, lon: number, days = 7) {
+  const url = `${BASE_URL}/forecast.json?key=${API_KEY}&q=${lat},${lon}&days=${days}&aqi=no&alerts=yes`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Failed to fetch forecast");
+  return res.json();
+}
 
-  const res = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
-  );
-
-  if (!res.ok) throw new Error("City not found or API error");
+export async function fetchWeatherByCity(city: string, days = 7) {
+  const url = `${BASE_URL}/forecast.json?key=${API_KEY}&q=${encodeURIComponent(
+    city
+  )}&days=${days}&aqi=no&alerts=yes`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Failed to fetch weather by city");
   return res.json();
 }
