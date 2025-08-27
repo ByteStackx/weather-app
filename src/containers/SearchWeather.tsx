@@ -5,6 +5,7 @@ import { SavedLocations } from "../components/SavedLocations";
 import styles from "../styles/SearchWeather.module.css";
 import { fetchWeatherByCity, fetchForecast } from "../services/weatherApi";
 import { PreferencesContext } from "../context/PreferenesContext";
+import { WeatherAlerts } from "../components/WeatherAlerts";
 
 export const SearchWeather: React.FC = () => {
   const [query, setQuery] = useState("");
@@ -16,6 +17,12 @@ export const SearchWeather: React.FC = () => {
   const [savedLocations, setSavedLocations] = useState<string[]>([]);
 
   const { unit } = useContext(PreferencesContext);
+  useEffect(() => {
+    if ("Notification" in window) {
+      Notification.requestPermission();
+    }
+  }, []);
+
 
   useEffect(() => {
     const stored = localStorage.getItem("savedLocations");
@@ -119,6 +126,10 @@ export const SearchWeather: React.FC = () => {
             <Text variant="p">Wind: {weather.current.wind_kph} kph</Text>
           </div>
 
+          <WeatherAlerts
+            lat={weather.location.lat}
+            lon={weather.location.lon}
+          />
           <div className={styles.forecast}>
             <div className={styles.toggle}>
               <Button

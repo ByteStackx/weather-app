@@ -5,6 +5,7 @@ import styles from "../styles/CurrentWeather.module.css";
 import { fetchCurrentWeather, fetchForecast } from "../services/weatherApi";
 import { useGeolocation } from "../hooks/useGeolocation";
 import { PreferencesContext } from "../context/PreferenesContext";
+import { WeatherAlerts } from "../components/WeatherAlerts";
 
 export const CurrentWeather: React.FC = () => {
   const { position, error: geoError } = useGeolocation();
@@ -67,7 +68,8 @@ export const CurrentWeather: React.FC = () => {
       <Text variant="p">Humidity: {current.current.humidity}%</Text>
       <Text variant="p">Wind: {current.current.wind_kph} kph</Text>
 
-      {/* Forecast toggle */}
+      {position && <WeatherAlerts lat={position.lat} lon={position.lon} />}
+
       <div className={styles.forecast}>
         <div className={styles.toggle}>
           <Button onClick={() => setView("hourly")} disabled={view === "hourly"}>

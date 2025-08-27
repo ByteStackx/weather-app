@@ -23,3 +23,11 @@ export async function fetchWeatherByCity(city: string, days = 7) {
   if (!res.ok) throw new Error("Failed to fetch weather by city");
   return res.json();
 }
+
+export async function fetchWeatherAlerts(lat: number, lon: number) {
+  const url = `${BASE_URL}/forecast.json?key=${API_KEY}&q=${lat},${lon}&days=1&alerts=yes`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Failed to fetch weather alerts");
+  const data = await res.json();
+  return data.alerts || null;
+}
