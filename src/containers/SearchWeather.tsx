@@ -6,6 +6,7 @@ import styles from "../styles/SearchWeather.module.css";
 import { fetchWeatherByCity, fetchForecast } from "../services/weatherApi";
 import { PreferencesContext } from "../context/PreferenesContext";
 import { WeatherAlerts } from "../components/WeatherAlerts";
+import { cacheWeather, getCachedWeather } from "../services/cacheService";
 
 export const SearchWeather: React.FC = () => {
   const [query, setQuery] = useState("");
@@ -35,6 +36,18 @@ export const SearchWeather: React.FC = () => {
 
     setLoading(true);
     try {
+      if(!navigator.onLine) {
+        const cached = getCachedWeather(searchCity);
+        if (cached) {
+          setWeather(cached.weather);
+          setForecast(cached.forecast);
+          setError("Showing cached data (offline)");
+          return;
+        } else {
+          setError("Offline and no cached data available");
+          return;
+        }
+      }
       const data = await fetchWeatherByCity(searchCity);
       setWeather(data);
 
@@ -45,6 +58,8 @@ export const SearchWeather: React.FC = () => {
           7
         );
         setForecast(forecastData.forecast);
+
+        cacheWeather(searchCity, data, forecastData.forecast);
       }
 
       if (!savedLocations.includes(searchCity)) {
@@ -57,7 +72,16 @@ export const SearchWeather: React.FC = () => {
     } catch (err) {
       console.error(err);
       setError("Failed to fetch weather data");
-    } finally {
+     const cached = getCachedWeather(searchCity);
+      if (cached) {
+        setWeather(cached.weather);
+        setForecast(cached.forecast);
+        setError("Showing cached data (offline)");
+      } else {
+        setError("Fail");
+      }
+    } 
+    finally {
       setLoading(false);
     }
   };
@@ -73,7 +97,6 @@ export const SearchWeather: React.FC = () => {
     localStorage.setItem("savedLocations", JSON.stringify(updated));
   };
 
-  // Safe temperature helpers
   const temp = weather
     ? unit === "C"
       ? weather.current.temp_c
