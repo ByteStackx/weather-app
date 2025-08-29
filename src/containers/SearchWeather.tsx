@@ -78,7 +78,7 @@ export const SearchWeather: React.FC = () => {
         setForecast(cached.forecast);
         setError("Showing cached data (offline)");
       } else {
-        setError("Fail");
+        setError("City not found.");
       }
     } 
     finally {

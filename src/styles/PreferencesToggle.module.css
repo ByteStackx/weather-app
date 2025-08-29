@@ -4,3 +4,22 @@
   justify-content: center;
   margin-bottom: 20px;
 }
+
+.container button {
+  flex: 0 0 auto; /* fixed width based on content */
+  padding: 6px 12px; /* smaller size */
+  border-radius: 999px; /* pill shape */
+  border: 1px solid #fff; /* high contrast border */
+  background-color: rgba(255, 255, 255, 0.2); /* semi-transparent */
+  color: #000000; /* default text color */
+  font-weight: 600;
+  font-size: 0.85rem; /* smaller font */
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.container button:hover {
+  background-color: rgba(181, 181, 181, 0.35);
+}

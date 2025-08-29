@@ -16,7 +16,7 @@ export const SavedLocations: React.FC<Props> = ({ locations, onSelect, onDelete 
     <div className={styles.container}>
       {locations.map((city) => (
         <div key={city} className={styles.item}>
-          <Button onClick={() => onSelect(city)}>{city}</Button>
+          <Button onClick={() => onSelect(city)} className={styles.locations}>{city}</Button>
           <Button onClick={() => onDelete(city)} className={styles.deleteBtn}>X</Button>
         </div>
       ))}

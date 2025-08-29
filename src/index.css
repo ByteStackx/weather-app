@@ -1,4 +1,3 @@
-/* Default (light theme) */
 :root {
   --bg-color: #f0f4f8;
   --card-bg: #ffffff;
@@ -9,7 +8,6 @@
   --button-hover: #1a5cd8;
 }
 
-/* Dark theme */
 [data-theme="dark"] {
   --bg-color: #1e1e2f;
   --card-bg: #2c2c3d;
