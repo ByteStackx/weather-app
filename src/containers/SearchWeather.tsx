@@ -56,15 +56,17 @@ export const SearchWeather: React.FC<SearchWeatherProps> = ({ onSearched }) => {
       const data = await fetchWeatherByCity(searchCity);
       setWeather(data);
 
+      let nextForecast: any = null;
       if (data?.location) {
         const forecastData = await fetchForecast(
           data.location.lat,
           data.location.lon,
           7
         );
-        setForecast(forecastData.forecast);
+        nextForecast = forecastData.forecast;
+        setForecast(nextForecast);
 
-        cacheWeather(searchCity, data, forecastData.forecast);
+        cacheWeather(searchCity, data, nextForecast);
       }
 
       if (!savedLocations.includes(searchCity)) {
@@ -74,7 +76,7 @@ export const SearchWeather: React.FC<SearchWeatherProps> = ({ onSearched }) => {
       }
 
       setError(null);
-      onSearched?.(data, forecast);
+      onSearched?.(data, nextForecast);
     } catch (err) {
       console.error(err);
       setError("Failed to fetch weather data");
