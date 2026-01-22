@@ -74,10 +74,10 @@ export const CurrentWeather: React.FC<CurrentWeatherProps> = ({ weather: initial
 }, [position, initialWeather, initialForecast]);
 
 
-  if (geoError) return <Text variant="p">Geolocation error: {geoError}</Text>;
-  if (!position) return <Text variant="p">Waiting for location...</Text>;
-  if (loading) return <Text variant="p">Loading current weather...</Text>;
-  if (error) return <Text variant="p">{error}</Text>;
+  if (geoError) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}><Text variant="p">Geolocation error: {geoError}</Text></div>;
+  if (!position) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}><Text variant="p">Waiting for location...</Text></div>;
+  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}><Text variant="p">Loading current weather...</Text></div>;
+  if (error) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}><Text variant="p">{error}</Text></div>;
   if (!current || !forecast) return null;
 
   const temp = unit === "C" ? current.current.temp_c : current.current.temp_f;
