@@ -50,6 +50,5 @@ export const WeatherAlerts: React.FC<Props> = ({ lat, lon }) => {
             </div>
         ))}
     </div>
-
   );
 };
