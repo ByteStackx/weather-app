@@ -17,8 +17,8 @@ function App() {
     <div className="app">
       <Text variant="h1" className="title">🌤️ Weather App</Text>
       <PreferencesToggle />
-      <CurrentWeather />
       <SearchWeather />
+      <CurrentWeather />
     </div>
   );
 }
