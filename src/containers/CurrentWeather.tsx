@@ -8,17 +8,28 @@ import { PreferencesContext } from "../context/PreferenesContext";
 import { WeatherAlerts } from "../components/WeatherAlerts";
 import { getCachedWeather, cacheWeather } from "../services/cacheService";
 
-export const CurrentWeather: React.FC = () => {
+interface CurrentWeatherProps {
+  weather?: any;
+  forecast?: any;
+}
+
+export const CurrentWeather: React.FC<CurrentWeatherProps> = ({ weather: initialWeather, forecast: initialForecast }) => {
   const { position, error: geoError } = useGeolocation();
-  const [current, setCurrent] = useState<any>(null);
-  const [forecast, setForecast] = useState<any>(null);
+  const [current, setCurrent] = useState<any>(initialWeather || null);
+  const [forecast, setForecast] = useState<any>(initialForecast || null);
   const [view, setView] = useState<"hourly" | "daily">("hourly");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { unit } = useContext(PreferencesContext);
 
   useEffect(() => {
-  if (!position) return;
+    if (initialWeather && initialForecast) {
+      setCurrent(initialWeather);
+      setForecast(initialForecast);
+      return;
+    }
+
+    if (!position) return;
 
   const cacheKey = `geo-${position.lat.toFixed(2)}-${position.lon.toFixed(2)}`;
 
@@ -60,7 +71,7 @@ export const CurrentWeather: React.FC = () => {
   };
 
   loadWeather();
-}, [position]);
+}, [position, initialWeather, initialForecast]);
 
 
   if (geoError) return <Text variant="p">Geolocation error: {geoError}</Text>;

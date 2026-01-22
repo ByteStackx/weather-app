@@ -8,7 +8,11 @@ import { PreferencesContext } from "../context/PreferenesContext";
 import { WeatherAlerts } from "../components/WeatherAlerts";
 import { cacheWeather, getCachedWeather } from "../services/cacheService";
 
-export const SearchWeather: React.FC = () => {
+interface SearchWeatherProps {
+  onSearched?: (weather: any, forecast: any) => void;
+}
+
+export const SearchWeather: React.FC<SearchWeatherProps> = ({ onSearched }) => {
   const [query, setQuery] = useState("");
   const [weather, setWeather] = useState<any>(null);
   const [forecast, setForecast] = useState<any>(null);
@@ -42,6 +46,7 @@ export const SearchWeather: React.FC = () => {
           setWeather(cached.weather);
           setForecast(cached.forecast);
           setError("Showing cached data (offline)");
+          onSearched?.(cached.weather, cached.forecast);
           return;
         } else {
           setError("Offline and no cached data available");
@@ -69,6 +74,7 @@ export const SearchWeather: React.FC = () => {
       }
 
       setError(null);
+      onSearched?.(data, forecast);
     } catch (err) {
       console.error(err);
       setError("Failed to fetch weather data");
@@ -77,6 +83,7 @@ export const SearchWeather: React.FC = () => {
         setWeather(cached.weather);
         setForecast(cached.forecast);
         setError("Showing cached data (offline)");
+        onSearched?.(cached.weather, cached.forecast);
       } else {
         setError("City not found.");
       }
@@ -126,76 +133,6 @@ export const SearchWeather: React.FC = () => {
         onSelect={handleSelect}
         onDelete={handleDelete}
       />
-
-      {loading && <Text variant="p">Fetching weather...</Text>}
-      {error && <Text variant="p">{error}</Text>}
-
-      {weather && forecast && (
-        <>
-          <div className={styles.currentInfo}>
-            <Text variant="h2">
-              {weather.location.name}, {weather.location.country}
-            </Text>
-            <div className={styles.row}>
-              <img
-                src={weather.current.condition.icon}
-                alt={weather.current.condition.text}
-              />
-              <Text variant="h3">{temp}°{unit}</Text>
-            </div>
-            <Text variant="p">{weather.current.condition.text}</Text>
-            <Text variant="p">Feels like: {feelsLike}°{unit}</Text>
-            <Text variant="p">Humidity: {weather.current.humidity}%</Text>
-            <Text variant="p">Wind: {weather.current.wind_kph} kph</Text>
-          </div>
-
-          <WeatherAlerts
-            lat={weather.location.lat}
-            lon={weather.location.lon}
-          />
-          <div className={styles.forecast}>
-            <div className={styles.toggle}>
-              <Button
-                onClick={() => setView("hourly")}
-                disabled={view === "hourly"}
-              >
-                Hourly
-              </Button>
-              <Button
-                onClick={() => setView("daily")}
-                disabled={view === "daily"}
-              >
-                Daily
-              </Button>
-            </div>
-
-            <div className={styles.list}>
-              {view === "hourly" &&
-                forecast.forecastday[0].hour.map((hour: any, i: number) => (
-                  <div key={i} className={styles.item}>
-                    <Text variant="p">{hour.time.split(" ")[1]}</Text>
-                    <Text variant="p">
-                      {unit === "C" ? hour.temp_c : hour.temp_f}°{unit}
-                    </Text>
-                  </div>
-                ))}
-
-              {view === "daily" &&
-                forecast.forecastday.map((day: any, i: number) => (
-                  <div key={i} className={styles.item}>
-                    <Text variant="p">{day.date}</Text>
-                    <Text variant="p">
-                      {unit === "C"
-                        ? day.day.avgtemp_c
-                        : day.day.avgtemp_f}
-                      °{unit}
-                    </Text>
-                  </div>
-                ))}
-            </div>
-          </div>
-        </>
-      )}
     </div>
   );
 };
