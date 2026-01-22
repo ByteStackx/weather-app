@@ -1,8 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+html {
+  height: 100%;
+  background-image: url('/sky-light.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+html[data-theme="dark"] {
+  background-image: url('/sky-dark.jpg');
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  color: var(--text-color);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 :root {
-  --bg-color: #f0f4f8;
-  --card-bg: #ffffff;
+  --bg-color: transparent;
+  --card-bg: rgba(255, 255, 255, 0.9);
   --text-color: #222222;
   --accent-color: #2575fc;
   --button-bg: #2575fc;
@@ -11,18 +31,11 @@
 }
 
 [data-theme="dark"] {
-  --bg-color: #1e1e2f;
-  --card-bg: #2c2c3d;
+  --bg-color: transparent;
+  --card-bg: rgba(44, 44, 61, 0.9);
   --text-color: #f0f4f8;
   --accent-color: #6a11cb;
   --button-bg: #6a11cb;
   --button-text: #ffffff;
   --button-hover: #5a0fbf;
-}
-
-body {
-  margin: 0;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
