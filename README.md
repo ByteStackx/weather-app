@@ -1,69 +1,92 @@
-# React + TypeScript + Vite
+# 🌤️ Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern weather application built with React, TypeScript, and Vite. Get real-time weather updates, view forecasts, and track saved locations with theme preferences.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Current Weather Display** - View real-time weather conditions for your location or any city
+- **7-Day Forecast** - Plan ahead with extended weather forecasts
+- **Weather Alerts** - Get notified about severe weather conditions
+- **Location Search** - Search for weather by city name
+- **Geolocation Support** - Automatically detect your current location
+- **Saved Locations** - Bookmark frequently checked locations
+- **Theme Toggle** - Switch between light and dark themes
+- **Responsive Design** - Works seamlessly on desktop and mobile devices
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React** - UI library
+- **TypeScript** - Type-safe development
+- **Vite** - Lightning-fast build tool
+- **React Context API** - State management for preferences
+- **OpenWeatherMap API** - Real-time weather data
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### Prerequisites
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Node.js 16+ 
+- An [OpenWeatherMap](https://openweathermap.org/) API key
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env.local` file in the root directory:
+   ```
+   VITE_WEATHER_API_KEY=your_api_key_here
+   ```
+
+### Development
+
+Run the development server:
+```bash
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The app will open at `http://localhost:5173`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Build
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Build for production:
+```bash
+npm run build
 ```
+
+### Linting
+
+Check code quality:
+```bash
+npm lint
+```
+
+## Project Structure
+
+```
+src/
+├── components/        # Reusable UI components
+├── containers/        # Page-level containers
+├── context/          # React Context providers
+├── hooks/            # Custom React hooks
+├── services/         # API and utility services
+├── styles/           # CSS modules
+├── types/            # TypeScript type definitions
+└── utils/            # Helper utilities
+```
+
+## Key Components
+
+- **CurrentWeather** - Displays current weather conditions and 7-day forecast
+- **SearchWeather** - Search bar for looking up weather by city
+- **WeatherCard** - Individual weather condition card
+- **WeatherAlerts** - Weather alert notifications
+- **SavedLocations** - Manage bookmarked locations
+- **PreferencesToggle** - Theme switcher
+
+## Environment Variables
+
+- `VITE_WEATHER_API_KEY` - Your OpenWeatherMap API key
